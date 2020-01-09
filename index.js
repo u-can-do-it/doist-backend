@@ -1,4 +1,5 @@
 const authorisation = require("./middleware/auth");
+const cors = require("./middleware/cors");
 const mongoose = require("mongoose");
 const users = require("./routes/users");
 const tasks = require("./routes/tasks");
@@ -23,6 +24,7 @@ mongoose
   .then(() => console.log("MongoDB connected..."))
   .catch(err => console.log("DB not connected"));
 
+app.use(cors);
 app.use(express.json());
 app.use("/api/tasks", [authorisation], tasks);
 app.use("/api/users", users);
