@@ -8,6 +8,13 @@ const express = require("express");
 const config = require("config");
 const app = express();
 
+const corsConfig = {
+  origin: "http://localhost:3000",
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsConfig));
+
 require("./startup/prod")(app);
 
 if (!config.get("jwtPrivateKey")) {
@@ -24,7 +31,6 @@ mongoose
   .then(() => console.log("MongoDB connected..."))
   .catch(err => console.log("DB not connected"));
 
-app.use(cors());
 app.use(express.json());
 app.use("/api/tasks", [authorisation], tasks);
 app.use("/api/users", users);
