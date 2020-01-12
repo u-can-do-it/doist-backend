@@ -28,8 +28,10 @@ const Task = mongoose.model("Task", taskSchema);
 function validateTask(task) {
   const schema = {
     user: Joi.ObjectId().required(),
-    name: Joi.string().min(4),
-    deadline: Joi.date().required(),
+    name: Joi.string()
+      .min(4)
+      .required(),
+    deadline: Joi.date(),
     archived: Joi.boolean()
   };
   return Joi.validate(task, schema);
