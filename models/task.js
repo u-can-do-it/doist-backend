@@ -19,7 +19,11 @@ const taskSchema = new mongoose.Schema({
   },
   deadline: {
     type: Date
-  }
+  },
+  order: {
+    type: Number
+  },
+  dateCompleted: Date
 });
 
 const Task = mongoose.model("Task", taskSchema);
@@ -31,7 +35,9 @@ function validateTask(task) {
       .min(4)
       .required(),
     deadline: Joi.date(),
-    archived: Joi.boolean()
+    archived: Joi.boolean(),
+    order: Joi.number(),
+    dateCompleted: Joi.date()
   };
   return Joi.validate(task, schema);
 }
