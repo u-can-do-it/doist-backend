@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const { Task, validate } = require("../models/task");
+const { ArchivedTask } = require("../models/archived");
 
 // add new task
 router.post("/", async (req, res) => {
@@ -49,18 +50,33 @@ router.get("/:id", async (req, res) => {
 
 // edit task.
 router.put("/:id", async (req, res) => {
+  const taskToUpdate = req.body;
   try {
-    validate(req.body);
+    validate(taskToUpdate);
   } catch (error) {
     res.status(400).send(error.details[0].message);
     return;
   }
 
-  try {
-    const task = await Task.updateOne({ _id: req.params.id }, { ...req.body });
-    res.send(task);
-  } catch (error) {
-    return res.status(404).send("No task with given id");
+  if (taskToUpdate.archived) {
+    try {
+      await Task.findByIdAndRemove(taskToUpdate._id);
+      const archivedTask = new ArchivedTask({ ...taskToUpdate });
+      archived = await archivedTask.save();
+      res.send(archived);
+    } catch (error) {
+      return res.status(404).send("No task with given id");
+    }
+  } else {
+    try {
+      const task = await Task.updateOne(
+        { _id: req.params.id },
+        { ...req.body }
+      );
+      res.send(task);
+    } catch (error) {
+      return res.status(404).send("No task with given id");
+    }
   }
 });
 
