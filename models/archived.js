@@ -13,7 +13,10 @@ const archivedTaskSchema = new mongoose.Schema({
     minlength: 4,
     maxlength: 255
   },
-  archived: true,
+  archived: {
+    type: Boolean,
+    default: true
+  },
   deadline: {
     type: Date
   },
@@ -23,7 +26,7 @@ const archivedTaskSchema = new mongoose.Schema({
   dateCompleted: Date
 });
 
-const ArchivedTask = mongoose.model("Task", archivedTaskSchema);
+const ArchivedTask = mongoose.model("ArchivedTask", archivedTaskSchema);
 
 function validateArchivedTask(task) {
   const schema = {
