@@ -13,8 +13,6 @@ const corsConfig = {
   optionsSuccessStatus: 200
 };
 
-app.use(cors(corsConfig));
-
 require("./startup/prod")(app);
 
 if (!config.get("jwtPrivateKey")) {
@@ -31,6 +29,7 @@ mongoose
   .then(() => console.log("MongoDB connected..."))
   .catch(err => console.log("DB not connected"));
 
+app.use(cors(corsConfig));
 app.use(express.json());
 app.use("/api/tasks", [authorisation], tasks);
 app.use("/api/users", users);

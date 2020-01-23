@@ -23,7 +23,10 @@ const archivedTaskSchema = new mongoose.Schema({
   order: {
     type: Number
   },
-  dateCompleted: Date
+  executionDate: {
+    type: Date,
+    default: new Date()
+  }
 });
 
 const ArchivedTask = mongoose.model("ArchivedTask", archivedTaskSchema);
@@ -42,5 +45,5 @@ function validateArchivedTask(task) {
   return Joi.validate(task, schema);
 }
 
-exports.archivedTask = ArchivedTask;
+exports.ArchivedTask = ArchivedTask;
 exports.validate = validateArchivedTask;

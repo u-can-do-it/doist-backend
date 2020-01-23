@@ -50,18 +50,18 @@ router.get("/:id", async (req, res) => {
 
 // edit task.
 router.put("/:id", async (req, res) => {
-  const taskToUpdate = req.body;
+  let task = { ...req.body };
   try {
-    validate(taskToUpdate);
+    validate(task);
   } catch (error) {
     res.status(400).send(error.details[0].message);
     return;
   }
 
-  if (taskToUpdate.archived) {
+  if (task.archived) {
     try {
-      await Task.findByIdAndRemove(taskToUpdate._id);
-      const archivedTask = new ArchivedTask({ ...taskToUpdate });
+      await Task.findOneAndDelete({ _id: req.params.id });
+      const archivedTask = new ArchivedTask({ ...task });
       archived = await archivedTask.save();
       res.send(archived);
     } catch (error) {
@@ -69,10 +69,8 @@ router.put("/:id", async (req, res) => {
     }
   } else {
     try {
-      const task = await Task.updateOne(
-        { _id: req.params.id },
-        { ...req.body }
-      );
+      task = new Task({ ...task });
+      task = await Task.updateOne({ _id: req.params.id }, task);
       res.send(task);
     } catch (error) {
       return res.status(404).send("No task with given id");
