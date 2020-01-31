@@ -9,7 +9,7 @@ const config = require("config");
 const app = express();
 
 const corsConfig = {
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000", "https://u-can-do-it.github.io"],
   optionsSuccessStatus: 200
 };
 
