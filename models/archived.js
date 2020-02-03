@@ -10,7 +10,7 @@ const archivedTaskSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    minlength: 4,
+    minlength: 1,
     maxlength: 255
   },
   archived: {
@@ -35,7 +35,7 @@ function validateArchivedTask(task) {
   const schema = {
     user: Joi.ObjectId().required(),
     name: Joi.string()
-      .min(4)
+      .min(1)
       .required(),
     deadline: Joi.date(),
     archived: true,
