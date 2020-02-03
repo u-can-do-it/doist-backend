@@ -32,7 +32,7 @@ function validateTask(task) {
   const schema = {
     user: Joi.ObjectId().required(),
     name: Joi.string()
-      .min(4)
+      .min(1)
       .required(),
     deadline: Joi.date(),
     archived: Joi.boolean(),
