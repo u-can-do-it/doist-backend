@@ -1,4 +1,4 @@
-# Backed of [DOIST APP](https://u-can-do-it.github.io/doist/)
+## Backed of the [DOIST APP](https://u-can-do-it.github.io/doist/)
 
 ### Tech stack
 
